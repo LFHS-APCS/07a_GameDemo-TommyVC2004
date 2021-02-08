@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class Game {
 
-    private int [] locations;  // note: unitialized, will be created in constructor
+    private ArrayList<Integer> locations = new ArrayList<Integer>();
     private int numGuesses = 0;
     private int numHits = 0; // TODO (in phase 2) get rid of this variable
     public final int UPPER = 5;
@@ -41,10 +41,9 @@ public class Game {
     {
         // Get a random number from 0 to UPPER-1 inclusive. 
         int randomNum = (int) (Math.random() * UPPER);
-        locations = new int[3]; 
-        locations[0] = randomNum;
-        locations[1] = randomNum + 1;
-        locations[2] = randomNum + 2;
+        locations.add(randomNum);
+        locations.add(randomNum + 1);
+        locations.add(randomNum + 2);
     }
 
     /**
@@ -64,14 +63,15 @@ public class Game {
     public String checkGuess(int guess) 
     { 
         String result = "miss"; 
-        for(int i=0; i < locations.length; i++) { 
-            if (guess == locations[i]) {
+        for(int i=0; i < locations.size(); i++) { 
+            if (guess == locations.get(i)) {
                 result = "hit"; 
                 numHits++; 
+                locations.remove(i);
                 break;
             }
         } 
-        if (numHits == locations.length) { 
+        if (numHits == 3) { 
             result = "kill"; 
         }
 
